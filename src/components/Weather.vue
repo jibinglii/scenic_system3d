@@ -1,25 +1,24 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover
-        trigger="hover"
-        placement="right"
-        width="460"
-        v-model="visible"
-        title="天气"
-        popper-class="jian_weather"
-      >
+      <el-popover trigger="hover"
+                  placement="right"
+                  width="460"
+                  v-model="visible"
+                  title="天气"
+                  popper-class="jian_weather">
         <p @click="visible = false">关闭</p>
-        <iframe
-          src="http://weather.seniverse.com/?token=baab943b-0200-4e73-ae33-c93686246f9a"
-          id="_weather"
-          frameborder="0"
-          height="445"
-          width="100%"
-          scrolling="no"
-        ></iframe>
+        <iframe src="http://weather.seniverse.com/?token=baab943b-0200-4e73-ae33-c93686246f9a"
+                id="_weather"
+                frameborder="0"
+                height="460"
+                width="100%"
+                scrolling="no"></iframe>
 
-        <img :src="img" class="img" alt slot="reference" />
+        <img :src="img"
+             class="img"
+             alt
+             slot="reference" />
       </el-popover>
     </div>
   </div>
@@ -29,7 +28,7 @@
 import { Popover, Button, Collapse, CollapseItem } from "element-ui";
 export default {
   name: "weather",
-  data() {
+  data () {
     return {
       visible: false,
       isshow: false,
@@ -52,13 +51,20 @@ export default {
 .el-popover p {
   margin-top: -30px;
 }
+#_weather {
+  padding-top: 20px;
+}
 .img {
   position: absolute;
   left: 15%;
   top: 26%;
 }
 
-// .el-popover .popper__arrow {
-//   top: 105px !important;
-// }
+@media (min-width: 1000px) and (max-width: 1441px) {
+  .img {
+    position: absolute;
+    left: 11%;
+    top: 26%;
+  }
+}
 </style>

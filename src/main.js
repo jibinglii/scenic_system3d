@@ -10,7 +10,6 @@ Vue.config.productionTip = false
 
 // import VueiClient from '@supermap/vue-iclient-leaflet';
 // Vue.use(VueiClient);
-
 import './assets/css/common.scss'
 
 Vue.prototype.$http = http

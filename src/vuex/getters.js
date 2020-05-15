@@ -1,3 +1,13 @@
+export const fId = state => state.fId
+export const scenicList = state => state.scenicList
+export const camera = state => state.camera
+export const F_Id = state => state.F_Id
+export const smviewer = state => state.smviewer
+export const scenicListAdd = state => state.scenicListAdd
+export const csListAdd = state => state.csListAdd
+export const zxistAdd = state => state.zxistAdd
+export const wifiListAdd = state => state.wifiListAdd
+export const fdListAdd = state => state.fdListAdd
 export const isPack = state => state.isPack
 export const isPackShow1 = state => state.isPackShow1
 export const isPackShow2 = state => state.isPackShow2

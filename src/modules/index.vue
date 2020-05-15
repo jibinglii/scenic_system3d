@@ -1,8 +1,12 @@
 <template>
   <div class="index_div">
-    <!-- <v-map></v-map> -->
-    <iframe src="../static/gettingStarted/f.html" width="100%" height="100%" class="ifram_3d"></iframe>
-    <div class="title_Div" :style="{'background-image':'url('+title_bg+')'}">
+    <v-map></v-map>
+    <!-- <iframe src="../static/gettingStarted/TheBlackBamboopark.html"
+            width="100%"
+            height="100%"
+            class="ifram_3d"></iframe> -->
+    <div class="title_Div"
+         :style="{'background-image':'url('+title_bg+')'}">
       <h2>数字景区虚拟旅游系统</h2>
       <div class="numbers">
         <span>
@@ -23,16 +27,16 @@
       <v-search></v-search>
       <v-weather></v-weather>
       <v-sights></v-sights>
-      <v-address></v-address>
+      <v-address @mouseenter.native="mouseAddress"></v-address>
       <v-monitor></v-monitor>
       <v-navigation></v-navigation>
       <v-statistics></v-statistics>
     </div>
-    <div class="echarts_right">
+    <!-- <div class="echarts_right">
       <v-pack-data v-show="$store.state.isPack"></v-pack-data>
       <v-ticket-data v-show="$store.state.isTicket"></v-ticket-data>
       <v-monitor-data v-show="$store.state.isMonitor"></v-monitor-data>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -50,7 +54,7 @@ import TicketData from "../components/TicketData";
 import MonitorData from "../components/MonitorData";
 export default {
   name: "index",
-  data() {
+  data () {
     return {
       title_bg: require("../assets/images/title_bg.png"),
       visible: false,
@@ -75,14 +79,23 @@ export default {
         ZaiYuanCount: "",
         RuYuanCount: "",
         ShiShiShouPiao: ""
-      }
+      },
+      smviewer: {},
+      scenicListAdd: []
     };
   },
-  created() {
-    this.ticketDatas();
+  created () {
+    // this.ticketDatas();
   },
   methods: {
-    async ticketDatas() {
+    mouseAddress () {
+      console.log('rrrrr')
+      this.smviewer = this.$store.state.smviewer
+      this.scenicListAdd = this.$store.state.scenicListAdd
+      console.log(this.scenicListAdd)
+      this.smviewer.entities.remove(this.scenicListAdd);
+    },
+    async ticketDatas () {
       await this.$http
         .get("http://119.3.248.197:8086/api/mobile/PiaoWuShuJu")
         .then(res => {

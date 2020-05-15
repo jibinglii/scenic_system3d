@@ -1,17 +1,17 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover
-        trigger="hover"
-        placement="right"
-        width="460"
-        v-model="visible"
-        title="游客导览"
-        popper-class="jian_navigation"
-      >
+      <el-popover trigger="hover"
+                  placement="right"
+                  width="460"
+                  v-model="visible"
+                  title="游客导览"
+                  popper-class="jian_navigation">
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
-          <div class="list" v-for="(item,index) in lists" :key="index">
+          <div class="list"
+               v-for="(item,index) in lists"
+               :key="index">
             <div class="top">
               <h2>{{item.route}}</h2>
               <div class="button_div">
@@ -23,7 +23,10 @@
             </div>
           </div>
         </div>
-        <img :src="img" class="img" alt slot="reference" />
+        <img :src="img"
+             class="img"
+             alt
+             slot="reference" />
       </el-popover>
     </div>
   </div>
@@ -33,7 +36,7 @@
 import { Popover, Button } from "element-ui";
 export default {
   name: "search",
-  data() {
+  data () {
     return {
       visible: false,
       isshow: false,
@@ -111,6 +114,13 @@ export default {
   position: absolute;
   right: 15%;
   top: 26%;
+}
+@media (min-width: 1000px) and (max-width: 1441px) {
+  .img {
+    position: absolute;
+    right: 11%;
+    top: 26%;
+  }
 }
 .el-popover p {
   margin-top: -30px;

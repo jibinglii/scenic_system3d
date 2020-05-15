@@ -4,16 +4,17 @@
   box-sizing: border-box;
 }
 
-.leaflet-left {
-  right: 2%;
-  top: 20%;
-  left: inherit;
+.cesium-infoBox {
+  top: initial;
+  bottom: 200px;
 
-  .leaflet-bar a {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+  .cesium-infoBox-title {
+    height: auto;
+    white-space: inherit;
+    overflow: auto;
+    text-overflow: inherit;
   }
+
 }
 
 .el-popover p {
@@ -26,7 +27,7 @@
   background: rgba(256, 256, 256, 0.7);
   border: none;
   // top: 233px !important;
-  padding: 20px 30px 30px;
+  padding: 20px 30px 20px;
   border-radius: 15px;
   max-height: 400;
   // overflow-y: hidden;
@@ -70,36 +71,6 @@
   }
 }
 
-// .img_div {
-//   width: 60px;
-//   height: 60px;
-//   border-radius: 20px;
-//   background: #fff;
-//   margin-bottom: 20px;
-
-//   .img,
-//   .activeImg {
-//     display: none;
-//     margin-left: -9px;
-//   }
-
-//   .img {
-//     display: block;
-//   }
-
-//   &:hover {
-//     background: #267abb;
-//     border: solid 1px #267abb;
-
-//     .activeImg {
-//       display: block;
-//     }
-
-//     .img {
-//       display: none;
-//     }
-//   }
-// }
 
 // tianqi
 .el-collapse-item__header {
@@ -138,6 +109,7 @@
 .listDiv {
   height: 450px;
   overflow-y: scroll;
+  padding-top: 15px;
 
   .list {
     display: flex;
@@ -150,6 +122,7 @@
 
       img {
         width: 150px;
+        height: 100px;
       }
     }
 
@@ -235,11 +208,12 @@
 // }
 
 @media (min-width: 1000px) and (max-width: 1441px) {
-  .el-popover {
-    top: 198px !important;
-  }
+  // .el-popover {
+  //   top: 198px !important;
+  // }
 
-  .jian_address {
-    top: 373px !important;
-  }
+  // .jian_address {
+  //   top: 373px !important;
+  // }
+
 }

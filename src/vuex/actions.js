@@ -1,4 +1,54 @@
 // 应用mutation
+export const setfId = ({
+  commit
+}, data) => {
+  commit('changefId', data)
+}
+export const setScenicList = ({
+  commit
+}, data) => {
+  commit('changeScenicList', data)
+}
+export const setcamera = ({
+  commit
+}, data) => {
+  commit('changecamera', data)
+}
+export const setF_Id = ({
+  commit
+}, data) => {
+  commit('changeF_Id', data)
+}
+export const setsmviewer = ({
+  commit
+}, data) => {
+  commit('changesmviewer', data)
+}
+export const setscenicListAdd = ({
+  commit
+}, data) => {
+  commit('changescenicListAdd', data)
+}
+export const setcsListAdd = ({
+  commit
+}, data) => {
+  commit('changecsListAdd', data)
+}
+export const setzxListAdd = ({
+  commit
+}, data) => {
+  commit('changezxistAdd', data)
+}
+export const setwifiListAdd = ({
+  commit
+}, data) => {
+  commit('changewifiListAdd', data)
+}
+export const setfdListAdd = ({
+  commit
+}, data) => {
+  commit('changefdListAdd', data)
+}
 export const isPackAction = ({
   commit
 }) => {
@@ -46,7 +96,7 @@ export const isMonitorShow1 = ({
 }) => {
   commit('changeIsMonitorShow1', true);
 }
-export const  isMonitorShow2= ({
+export const isMonitorShow2 = ({
   commit
 }) => {
   commit('changeIsMonitorShow2', true);

@@ -1,17 +1,17 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover
-        trigger="hover"
-        placement="right"
-        width="460"
-        v-model="visible"
-        title="数据统计"
-        popper-class="jian_statics"
-      >
+      <el-popover trigger="hover"
+                  placement="right"
+                  width="460"
+                  v-model="visible"
+                  title="数据统计"
+                  popper-class="jian_statics">
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
-          <div class="list" v-for="(item,index) in lists" :key="index">
+          <div class="list"
+               v-for="(item,index) in lists"
+               :key="index">
             <div class="top">
               <h2>{{item.name}}</h2>
               <div class="button_div">
@@ -20,7 +20,10 @@
             </div>
           </div>
         </div>
-        <img :src="img" class="img" alt slot="reference" />
+        <img :src="img"
+             class="img"
+             alt
+             slot="reference" />
       </el-popover>
     </div>
   </div>
@@ -31,7 +34,7 @@ import { Popover, Button } from "element-ui";
 
 export default {
   name: "search",
-  data() {
+  data () {
     return {
       visible: false,
       isshow: false,
@@ -54,7 +57,7 @@ export default {
     };
   },
   methods: {
-    statiClick(id) {
+    statiClick (id) {
       console.log(id);
       if (id === 0) {
         this.$store.state.isTicketShow1 = false;
@@ -139,6 +142,13 @@ export default {
   position: absolute;
   right: 6%;
   top: 60%;
+}
+@media (min-width: 1000px) and (max-width: 1441px) {
+  .img {
+    position: absolute;
+    right: 1%;
+    top: 60%;
+  }
 }
 .el-popover p {
   margin-top: -30px;

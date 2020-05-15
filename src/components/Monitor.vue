@@ -1,17 +1,17 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover
-        trigger="hover"
-        placement="right"
-        width="460"
-        v-model="visible"
-        title="实时监控"
-        popper-class="jian_monitor"
-      >
+      <el-popover trigger="hover"
+                  placement="right"
+                  width="460"
+                  v-model="visible"
+                  title="实时监控"
+                  popper-class="jian_monitor">
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
-          <div class="list" v-for="(item,index) in scenicList" :key="index">
+          <div class="list"
+               v-for="(item,index) in $store.state.scenicList"
+               :key="index">
             <div class="left">
               <img :src="item.F_Image" />
             </div>
@@ -25,7 +25,10 @@
           </div>
         </div>
 
-        <img :src="img" class="img" alt slot="reference"/>
+        <img :src="img"
+             class="img"
+             alt
+             slot="reference" />
       </el-popover>
     </div>
   </div>
@@ -35,7 +38,7 @@
 import { Popover, Button } from "element-ui";
 export default {
   name: "search",
-  data() {
+  data () {
     return {
       visible: false,
       isshow: false,
@@ -44,17 +47,10 @@ export default {
       scenicList: []
     };
   },
-  created() {
-    this.getLIsts();
+  created () {
   },
   methods: {
-    async getLIsts() {
-      var fId = localStorage.getItem("Fid");
-      await this.$http.get("/gisscenicarea/getlist/" + fId).then(res => {
-        console.log(res);
-        this.scenicList = res.data.data;
-      });
-    }
+
   },
   components: {
     "el-popover": Popover,
@@ -76,5 +72,12 @@ export default {
   position: absolute;
   right: 28%;
   top: -6%;
+}
+@media (min-width: 1000px) and (max-width: 1441px) {
+  .img {
+    position: absolute;
+    right: 24%;
+    top: -6%;
+  }
 }
 </style>
