@@ -24,12 +24,13 @@
               <h3>{{item.F_Name}}</h3>
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
-                <el-button @click.native="viewMapClick(item.F_Id)">查看地图</el-button>
+                <el-button @click.native="viewMapClick(item)">查看地图</el-button>
                 <!-- <el-button>实时监控</el-button> -->
               </div>
             </div>
           </div>
-          <div v-show="isShow">未搜索到指定内容</div>
+          <div v-show="isShow"
+               style="text-align:center">未搜索到指定内容</div>
         </div>
         <img :src="img"
              class="img"
@@ -74,14 +75,16 @@ export default {
         }
       });
     },
-    viewMapClick (F_Id) {
-      console.log(F_Id)
-      // this.map = this.$store.state.map
-      // for (var i = 0; i < this.lists.length; i++) {
-      // if (F_Id === this.lists[i].F_Id) {
-      // this.map.panTo([this.lists[i].F_XPoint, this.lists[i].F_YPoint]);
-      // }
-      // }
+    viewMapClick (item) {
+      var camera = this.$store.state.camera
+      camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(item.F_XPoint * 1, item.F_YPoint * 1, item.F_Height * 1),
+        orientation: {
+          heading: 3.361386,
+          pitch: -0.543285,
+          roll: 6.283185307179563
+        }
+      });
     }
   },
   components: {

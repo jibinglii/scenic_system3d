@@ -29,6 +29,11 @@ export const setscenicListAdd = ({
 }, data) => {
   commit('changescenicListAdd', data)
 }
+export const setMonitorListAdd = ({
+  commit
+}, data) => {
+  commit('changeMonitorListAdd', data)
+}
 export const setcsListAdd = ({
   commit
 }, data) => {

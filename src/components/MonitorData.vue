@@ -1,25 +1,34 @@
 <template>
   <div>
-    <div class="bar" v-show="$store.state.isMonitorShow1">
+    <div class="bar"
+         v-show="$store.state.isMonitorShow1">
       <div class="top">
         <span>周</span>
-        <span @click="close()" class="close">关闭</span>
+        <span @click="close()"
+              class="close">关闭</span>
       </div>
-      <div id="mainMonitor1" style="width:100%;height: 200px"></div>
+      <div id="mainMonitor1"
+           style="width:300px;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isMonitorShow2">
+    <div class="bar"
+         v-show="$store.state.isMonitorShow2">
       <div class="top">
         <span>月</span>
-        <span @click="close2()" class="close">关闭</span>
+        <span @click="close2()"
+              class="close">关闭</span>
       </div>
-      <div id="mainMonitor2" style="width:100%;height: 200px"></div>
+      <div id="mainMonitor2"
+           style="width:300px;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isMonitorShow3">
+    <div class="bar"
+         v-show="$store.state.isMonitorShow3">
       <div class="top">
         <span>年</span>
-        <span @click="close3()" class="close">关闭</span>
+        <span @click="close3()"
+              class="close">关闭</span>
       </div>
-      <div id="mainMonitor3" style="width:100%;height: 200px"></div>
+      <div id="mainMonitor3"
+           style="width:300px;height: 200px"></div>
     </div>
   </div>
 </template>
@@ -28,15 +37,16 @@
 let echarts = require("echarts/lib/echarts");
 // 引入柱状图组件
 require("echarts/lib/chart/bar");
+require('echarts/lib/chart/line')
 // 引入提示框和title组件
 require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
 export default {
-  name: "bar",
-  data() {
+  name: "",
+  data () {
     return {};
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.initMonitorData();
       this.initMonitorData2();
@@ -44,18 +54,18 @@ export default {
     });
   },
   methods: {
-    close() {
+    close () {
       this.$store.state.isMonitorShow1 = false;
     },
-    close2() {
+    close2 () {
       this.$store.state.isMonitorShow2 = false;
     },
-    close3() {
+    close3 () {
       this.$store.state.isMonitorShow3 = false;
     },
 
     //初始化数据
-    initMonitorData() {
+    initMonitorData () {
       // 基于准备好的dom，初始化echarts实例
       var mainMonitor1 = echarts.init(document.getElementById("mainMonitor1"));
       this.$http
@@ -68,11 +78,11 @@ export default {
           console.log(res);
           // 绘制图表
           mainMonitor1.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "μg/m3",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -83,7 +93,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
@@ -108,7 +118,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {
@@ -131,7 +156,7 @@ export default {
           });
         });
     },
-    initMonitorData2() {
+    initMonitorData2 () {
       // 基于准备好的dom，初始化echarts实例
       var mainMonitor2 = echarts.init(document.getElementById("mainMonitor2"));
       this.$http
@@ -144,11 +169,11 @@ export default {
           console.log(res);
           // 绘制图表
           mainMonitor2.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "μg/m3",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -159,7 +184,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
@@ -184,7 +209,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {
@@ -207,7 +247,7 @@ export default {
           });
         });
     },
-    initMonitorData3() {
+    initMonitorData3 () {
       // 基于准备好的dom，初始化echarts实例
       var mainMonitor3 = echarts.init(document.getElementById("mainMonitor3"));
       this.$http
@@ -220,11 +260,11 @@ export default {
           console.log(res);
           // 绘制图表
           mainMonitor3.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "μg/m3",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -235,7 +275,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
@@ -260,7 +300,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {

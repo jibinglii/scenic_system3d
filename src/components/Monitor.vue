@@ -19,7 +19,7 @@
               <h3>{{item.F_Name}}</h3>
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
-                <el-button>查看</el-button>
+                <el-button @click.native="viewMapClick(item)">查看</el-button>
               </div>
             </div>
           </div>
@@ -50,7 +50,17 @@ export default {
   created () {
   },
   methods: {
-
+    viewMapClick (item) {
+      var camera = this.$store.state.camera
+      camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(item.F_XPoint * 1, item.F_YPoint * 1, item.F_Height * 1),
+        orientation: {
+          heading: 3.361386,
+          pitch: -0.543285,
+          roll: 6.283185307179563
+        }
+      });
+    }
   },
   components: {
     "el-popover": Popover,

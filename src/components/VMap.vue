@@ -7,7 +7,6 @@
 <script>
 const Cesium = window.Cesium;
 import $ from 'jquery'
-// import '../assets/js/require.min.js'
 export default {
   name: "vmap",
   data () {
@@ -37,7 +36,6 @@ export default {
   },
   created () {
     this.gissetting3d()
-
   },
   mounted () {
     this.smviewer = new Cesium.Viewer('cesiumContainer');
@@ -64,10 +62,66 @@ export default {
         }
       });
     });
-    var camera = scene.camera;
-    // console.log(camera)
     this.$store.dispatch('setsmviewer', this.smviewer)
     this.$store.dispatch('setcamera', camera)
+    var routes = new Cesium.RouteCollection(this.smviewer.entities);
+    //添加fpf飞行文件，fpf由SuperMap iDesktop生成
+    var fpfUrl = '../static/NewSceneRoutes.fpf';
+    routes.fromFile(fpfUrl);
+    //初始化飞行管理
+    var flyManager = new Cesium.FlyManager({
+      scene: scene,
+      routes: routes
+    });
+    //注册站点到达事件
+    flyManager.stopArrived.addEventListener(function (routeStop) {
+      routeStop.waitTime = 1; // 在每个站点处停留1s
+    });
+
+    flyManager.readyPromise.then(function () { // 飞行路线就绪
+      var currentRoute = flyManager.currentRoute;
+      currentRoute.isLineVisible = false;
+      currentRoute.isStopVisible = false;
+      //生成飞行文件中的所有站点列表
+      var allStops = flyManager.getAllRouteStops();
+      var menu = document.getElementById('stopList');
+      for (var i = 0, j = allStops.length; i < j; i++) {
+        var option = document.createElement('option');
+        option.innerHTML = "站点 " + (i + 1);
+        option.value = allStops[i].index;
+        menu.appendChild(option);
+      }
+
+      $('#stopList').change(function () { //注册站点切换事件
+        flyManager && flyManager.stop();
+        var index = parseInt($(this).val()); // 站点的索引
+        var route = flyManager.currentRoute;
+        var stop = route.get(index);
+        flyManager.currentStopIndex = index;
+        flyManager.viewToStop(stop);
+      });
+
+      $('#play').click(function () {
+        flyManager && flyManager.play();
+      });
+      $('#pause').click(function () {
+        flyManager && flyManager.pause();
+      });
+      $('#stop').click(function () {
+        flyManager && flyManager.stop();
+      });
+
+      $('#show-line').change(function () {
+        currentRoute.isLineVisible = $(this).prop('checked');
+      });
+
+      $('#show-stop').change(function () {
+        currentRoute.isStopVisible = $(this).prop('checked');
+      });
+
+      $('#toolbar').show();
+      $('#loadingbar').remove();
+    });
   },
   methods: {
     async gissetting3d () {
@@ -78,15 +132,14 @@ export default {
         this.fId = result.F_Id
         this.$store.dispatch("setfId", this.fId);
         this.scenicLists()
-        this.getListCs()
-        this.getListZx()
-        this.getListWIFI()
-        this.getListFd()
+        // this.getListCs()
+        // this.getListZx()
+        // this.getListWIFI()
+        // this.getListFd()
       })
     },
     async scenicLists () {
       await this.$http.get("/gisscenicarea/getlist/" + this.fId).then(res => {
-        // console.log(res);
         this.scenicList = res.data.data;
         this.$store.dispatch("setScenicList", this.scenicList);
         for (var i = 0; i < this.scenicList.length; i++) {
@@ -110,9 +163,33 @@ export default {
             }
           });
           this.$store.dispatch("setscenicListAdd", scenicListAdd);
-          // this.smviewer.entities.remove(scenicListAdd)
         }
       });
+    },
+    getmonitorLists () {
+      this.monitorLists = this.$store.state.scenicList;
+      for (var i = 0; i < this.monitorLists.length; i++) {
+        var monitorListAdd = this.smviewer.entities.add({
+          name: this.monitorLists[i].F_Remarks,
+          position: Cesium.Cartesian3.fromDegrees(this.monitorLists[i].F_XPoint * 1, this.monitorLists[i].F_YPoint * 1, this.monitorLists[i].F_Height * 1),
+
+          billboard: {
+            image: require('../assets/images/jk_icon.png'),
+            width: 30,
+            height: 40,
+          },
+          label: {
+            text: this.monitorLists[i].F_Name,
+            font: '18pt monospace',
+            style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+            outlineWidth: 2,
+            fontWeight: 600,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            pixelOffset: new Cesium.Cartesian2(0, -20)
+          }
+        });
+        this.$store.dispatch("setMonitorListAdd", monitorListAdd);
+      }
     },
     async getListCs () {
       this.F_Id = this.$store.state.F_Id

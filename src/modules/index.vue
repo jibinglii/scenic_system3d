@@ -1,10 +1,46 @@
 <template>
   <div class="index_div">
-    <v-map></v-map>
+    <v-map ref="mychild"></v-map>
     <!-- <iframe src="../static/gettingStarted/TheBlackBamboopark.html"
             width="100%"
             height="100%"
             class="ifram_3d"></iframe> -->
+    <div id='toolbar'
+         class="param-container tool-bar">
+      <span type="button"
+            id="play"
+            class="button black"
+            title="开始"></span>
+      <span type="button"
+            id="pause"
+            class="button black"
+            title="暂停"></span>
+      <span type="button"
+            id="stop"
+            class="button black"
+            title="停止"></span>
+      <div style="width: 150px;">
+        <select id="stopList"
+                class="form-control"
+                style="width: 100%;height:30px;margin:10px 0">
+          <!--<option disabled selected value>&#45;&#45;选择站点&#45;&#45;</option>-->
+        </select>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"
+                 id="show-line"
+                 unchecked> 显示飞行路线
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"
+                 id="show-stop"
+                 unchecked> 显示飞行站点
+        </label>
+      </div>
+    </div>
     <div class="title_Div"
          :style="{'background-image':'url('+title_bg+')'}">
       <h2>数字景区虚拟旅游系统</h2>
@@ -24,19 +60,23 @@
       </div>
     </div>
     <div class="list_div">
-      <v-search></v-search>
-      <v-weather></v-weather>
-      <v-sights></v-sights>
-      <v-address @mouseenter.native="mouseAddress"></v-address>
-      <v-monitor></v-monitor>
-      <v-navigation></v-navigation>
-      <v-statistics></v-statistics>
+      <v-search @mouseenter.native="mouseSearch"></v-search>
+      <v-weather @mouseenter.native="mouseWeather"></v-weather>
+      <v-sights @mouseenter.native="mouseSight"></v-sights>
+      <v-address @mouseenter.native="mouseAddress"
+                 @parentgetListCs="childgetListCs"
+                 @parentgetListZx="childgetListZx"
+                 @parentgetListWIFI="childgetListWIFI"
+                 @parentgetListFd="childgetListFd"></v-address>
+      <v-monitor @mouseenter.native="mouseMonitor"></v-monitor>
+      <v-navigation @mouseenter.native="mouseNavigation"></v-navigation>
+      <v-statistics @mouseenter.native="mousestatic"></v-statistics>
     </div>
-    <!-- <div class="echarts_right">
+    <div class="echarts_right">
       <v-pack-data v-show="$store.state.isPack"></v-pack-data>
       <v-ticket-data v-show="$store.state.isTicket"></v-ticket-data>
       <v-monitor-data v-show="$store.state.isMonitor"></v-monitor-data>
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -85,15 +125,77 @@ export default {
     };
   },
   created () {
-    // this.ticketDatas();
+    this.ticketDatas();
   },
   methods: {
+    childgetListCs () {
+      this.$refs.mychild.getListCs();
+    },
+    childgetListZx () {
+      this.$refs.mychild.getListZx();
+    },
+    childgetListWIFI () {
+      this.$refs.mychild.getListWIFI();
+    },
+    childgetListFd () {
+      this.$refs.mychild.getListFd();
+    },
+    mouseSight () {
+      if (this.$store.state.scenicList != '') {
+        var csListAdd = this.$store.state.csListAdd
+        var zxListAdd = this.$store.state.zxListAdd
+        var wifiListAdd = this.$store.state.wifiListAdd
+        var fdListAdd = this.$store.state.fdListAdd
+        this.smviewer = this.$store.state.smviewer
+        this.smviewer.entities.removeAll(csListAdd);
+        this.smviewer.entities.removeAll(zxListAdd);
+        this.smviewer.entities.removeAll(wifiListAdd);
+        this.smviewer.entities.removeAll(fdListAdd);
+      }
+      this.$refs.mychild.scenicLists();
+    },
     mouseAddress () {
-      console.log('rrrrr')
       this.smviewer = this.$store.state.smviewer
-      this.scenicListAdd = this.$store.state.scenicListAdd
-      console.log(this.scenicListAdd)
-      this.smviewer.entities.remove(this.scenicListAdd);
+      var scenicListAdd = this.$store.state.scenicListAdd
+      this.smviewer.entities.removeAll(scenicListAdd);
+      this.$refs.mychild.getListCs();
+      this.$refs.mychild.getListZx();
+      this.$refs.mychild.getListWIFI();
+      this.$refs.mychild.getListFd();
+      $('#toolbar').css('opacity', 0)
+    },
+    mouseMonitor () {
+      if (this.$store.state.scenicList != '') {
+        var csListAdd = this.$store.state.csListAdd
+        var zxListAdd = this.$store.state.zxListAdd
+        var wifiListAdd = this.$store.state.wifiListAdd
+        var fdListAdd = this.$store.state.fdListAdd
+        this.smviewer = this.$store.state.smviewer
+        this.smviewer.entities.removeAll(csListAdd);
+        this.smviewer.entities.removeAll(zxListAdd);
+        this.smviewer.entities.removeAll(wifiListAdd);
+        this.smviewer.entities.removeAll(fdListAdd);
+      }
+      this.$refs.mychild.getmonitorLists();
+      $('#toolbar').css('opacity', 0)
+    },
+    mouseNavigation () {
+      if (this.$store.state.scenicList != '') {
+        $('#toolbar').css('opacity', 1)
+      }
+    },
+    mouseSearch () {
+      this.$refs.mychild.getListCs();
+      this.$refs.mychild.getListZx();
+      this.$refs.mychild.getListWIFI();
+      this.$refs.mychild.getListFd();
+      $('#toolbar').css('opacity', 0)
+    },
+    mouseWeather () {
+      $('#toolbar').css('opacity', 0)
+    },
+    mousestatic () {
+      $('#toolbar').css('opacity', 0)
     },
     async ticketDatas () {
       await this.$http
@@ -131,7 +233,40 @@ export default {
     left: 0;
     top: 0;
   }
+  #toolbar {
+    position: fixed;
+    top: 40px;
+    left: 20px;
+    opacity: 0;
+    #play {
+      content: url(../assets/images/play.png);
+      height: 40px;
+      padding: 5px;
+    }
 
+    #pause {
+      content: url(../assets/images/pause.png);
+      height: 40px;
+      padding: 5px;
+    }
+
+    #stop {
+      content: url(../assets/images/stop.png);
+      height: 40px;
+      padding: 5px;
+    }
+    .checkbox {
+      line-height: 20px;
+      font-size: 12px;
+      label {
+        display: flex;
+        align-items: center;
+        input {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
   .title_Div {
     width: 636px;
     height: 114px;

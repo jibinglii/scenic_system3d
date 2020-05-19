@@ -17,6 +17,9 @@ export const changesmviewer = (state, data) => {
 export const changescenicListAdd = (state, data) => {
   state.scenicListAdd = data
 }
+export const changeMonitorListAdd = (state, data) => {
+  state.monitorListAdd = data
+}
 export const changecsListAdd = (state, data) => {
   state.csListAdd = data
 }

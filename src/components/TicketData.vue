@@ -8,7 +8,7 @@
               class="close">关闭</span>
       </div>
       <div id="mainTicket1"
-           style="width:100%;height: 200px"></div>
+           style="width:300px;height: 200px"></div>
     </div>
     <div class="bar"
          v-show="$store.state.isTicketShow2">
@@ -18,7 +18,7 @@
               class="close">关闭</span>
       </div>
       <div id="mainTicket2"
-           style="width:100%;height: 200px"></div>
+           style="width:300px;height: 200px"></div>
     </div>
   </div>
 </template>
@@ -27,6 +27,7 @@
 let echarts = require("echarts/lib/echarts");
 // 引入柱状图组件
 require("echarts/lib/chart/bar");
+require('echarts/lib/chart/line')
 // 引入提示框和title组件
 require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
@@ -37,8 +38,8 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      // this.initTicketData();
-      // this.initTicketData2();
+      this.initTicketData();
+      this.initTicketData2();
     });
   },
   methods: {
@@ -59,13 +60,13 @@ export default {
           console.log(res);
           // 绘制图表
           mainTicket1.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "票数（万张）",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
-                color: "#7a7b7b"
+                color: "#666"
               }
             },
             tooltip: {
@@ -74,9 +75,9 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
-                color: "#9c9e9e" //---所有图例的字体颜色
+                color: "#666" //---所有图例的字体颜色
               },
               data: ["售票票数", "环比（去年）"]
             },
@@ -99,7 +100,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {
@@ -135,13 +151,13 @@ export default {
           console.log(res);
           // 绘制图表
           mainTicket2.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "票数（万张）",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
-                color: "#7a7b7b"
+                color: "#666"
               }
             },
             tooltip: {
@@ -150,9 +166,9 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
-                color: "#9c9e9e" //---所有图例的字体颜色
+                color: "#666" //---所有图例的字体颜色
               },
               data: ["售票票数", "环比（去年）"]
             },
@@ -175,7 +191,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {

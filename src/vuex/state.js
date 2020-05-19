@@ -5,6 +5,7 @@ export default {
   F_Id: [],
   smviewer: {},
   scenicListAdd: [],
+  monitorListAdd: [],
   csListAdd: [],
   zxistAdd: [],
   wifiListAdd: [],

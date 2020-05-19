@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>北京紫竹院</title>
-  <link href="./Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-  <!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
-  <link href="./css/pretty.css" rel="stylesheet">
-  <script src="./js/jquery.min.js"></script>
-  <!-- <script src="./js/bootstrap.min.js"></script> -->
-  <!-- <script src="./js/bootstrap-select.min.js"></script> -->
-  <!-- <script src="./js/config.js"></script> -->
-  <script type="text/javascript" src="./js/require.min.js" data-main="js/main"></script>
-  <style>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1,
+      minimum-scale=1, user-scalable=no">
+    <title>北京紫竹院</title>
+    <link href="./Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="./css/pretty.css" rel="stylesheet">
+    <script src="./js/jquery.min.js"></script>
+    <!-- <script src="./js/bootstrap.min.js"></script> -->
+    <!-- <script src="./js/bootstrap-select.min.js"></script> -->
+    <!-- <script src="./js/config.js"></script> -->
+    <script type="text/javascript" src="./js/require.min.js"
+      data-main="js/main"></script>
+    <style>
     #play {
       content: url(./image/play.png);
       height: 30px;
@@ -59,14 +61,14 @@
     }
 
   </style>
-  <style>
+    <style>
     .cesium-infoBox {
       transition: opacity 0.2s;
       top: 762px;
     }
 
   </style>
-  <style>
+    <style>
     #ttoolbar {
       position: absolute;
       left: 10px;
@@ -77,12 +79,12 @@
     }
 
   </style>
-</head>
+  </head>
 
-<body>
-  <div id="cesiumContainer"></div>
-  <div id='loadingbar' class="spinner">
-    <!-- <div class="spinner-container container1">
+  <body>
+    <div id="cesiumContainer"></div>
+    <div id='loadingbar' class="spinner">
+      <!-- <div class="spinner-container container1">
       <div class="circle1"></div>
       <div class="circle2"></div>
       <div class="circle3"></div>
@@ -100,46 +102,46 @@
       <div class="circle3"></div>
       <div class="circle4"></div>
     </div> -->
-  </div>
-  <div id='toolbar' class="param-container tool-bar">
-    <span type="button" id="play" class="button black" title="开始"></span>
-    <span type="button" id="pause" class="button black" title="暂停"></span>
-    <span type="button" id="stop" class="button black" title="停止"></span>
-    <div style="width: 150px;">
-      <select id="stopList" class="form-control" style="width: 100%;">
-        <!--<option disabled selected value>&#45;&#45;选择站点&#45;&#45;</option>-->
+    </div>
+    <div id='toolbar' class="param-container tool-bar">
+      <span type="button" id="play" class="button black" title="开始"></span>
+      <span type="button" id="pause" class="button black" title="暂停"></span>
+      <span type="button" id="stop" class="button black" title="停止"></span>
+      <div style="width: 150px;">
+        <select id="stopList" class="form-control" style="width: 100%;">
+          <!--<option disabled selected value>&#45;&#45;选择站点&#45;&#45;</option>-->
+        </select>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="show-line" unchecked> 显示飞行路线
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="show-stop" unchecked> 显示飞行站点
+        </label>
+      </div>
+    </div>
+    <div id="ttoolbar" class="param-container tool-bar q">
+      <label style="font: 100 20px Arial;">热门景点</label>
+      <select id="position" style="width: 100%">
+        <option value="0">选择查看</option>
+        <option value="1">斑竹麓</option>
+        <option value="2">友贤山馆</option>
+        <option value="3">聆涛亭</option>
+        <option value="4">荷花渡</option>
+        <option value="5">青莲岛</option>
+        <option value="6">夕梯</option>
+        <option value="7">澄鲜湖</option>
+        <option value="8">跨海东征</option>
+        <option value="9">紫竹垂钓区</option>
+        <option value="10">四君亭</option>
+        <option value="11">三友亭</option>
+        <option value="12">澄碧山房</option>
       </select>
     </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="show-line" unchecked> 显示飞行路线
-      </label>
-    </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="show-stop" unchecked> 显示飞行站点
-      </label>
-    </div>
-  </div>
-  <div id="ttoolbar" class="param-container tool-bar q">
-    <label style="font: 100 20px Arial;">热门景点</label>
-    <select id="position" style="width: 100%">
-      <option value="0">选择查看</option>
-      <option value="1">斑竹麓</option>
-      <option value="2">友贤山馆</option>
-      <option value="3">聆涛亭</option>
-      <option value="4">荷花渡</option>
-      <option value="5">青莲岛</option>
-      <option value="6">夕梯</option>
-      <option value="7">澄鲜湖</option>
-      <option value="8">跨海东征</option>
-      <option value="9">紫竹垂钓区</option>
-      <option value="10">四君亭</option>
-      <option value="11">三友亭</option>
-      <option value="12">澄碧山房</option>
-    </select>
-  </div>
-  <script>
+    <script>
     //请在联网状态下查看此飞行范例
     var flyManager;
 
@@ -893,10 +895,10 @@
       //                      width:30,
       //                      height:40,
       //                   },});                     
-      viewer.zoomTo(viewer.entities);
+      // viewer.zoomTo(viewer.entities);
     }
 
   </script>
-</body>
+  </body>
 
 </html>

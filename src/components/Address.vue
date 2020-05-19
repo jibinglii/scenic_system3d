@@ -10,7 +10,8 @@
         <p @click="visible = false">关闭</p>
         <div class="address_item">
           <el-button v-for="(item,index) in lists"
-                     :key="index">
+                     :key="index"
+                     @click.native="typeBtn(index)">
             <div class="imgs">
               <img :src="item.F_Image"
                    class="icon _icon" />
@@ -56,7 +57,30 @@ export default {
         }
         this.$store.dispatch('setF_Id', this.FId)
       });
-    }
+    },
+    typeBtn (index) {
+      var csListAdd = this.$store.state.csListAdd
+      var zxListAdd = this.$store.state.zxListAdd
+      var wifiListAdd = this.$store.state.wifiListAdd
+      var fdListAdd = this.$store.state.fdListAdd
+      this.smviewer = this.$store.state.smviewer
+      this.smviewer.entities.removeAll(csListAdd);
+      this.smviewer.entities.removeAll(zxListAdd);
+      this.smviewer.entities.removeAll(wifiListAdd);
+      this.smviewer.entities.removeAll(fdListAdd);
+      if (index == 0) {
+        this.$emit('parentgetListCs')
+      }
+      if (index == 1) {
+        this.$emit('parentgetListZx')
+      }
+      if (index == 2) {
+        this.$emit('parentgetListWIFI')
+      }
+      if (index == 3) {
+        this.$emit('parentgetListFd')
+      }
+    },
   },
   components: {
     "el-popover": Popover,
