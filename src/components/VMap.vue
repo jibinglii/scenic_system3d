@@ -31,14 +31,17 @@ export default {
       wifiListFilter: [],
       fdListFilter: [],
       fId: 0,
-      F_Id: []
+      F_Id: [],
+      videoList: []
     };
   },
   created () {
     this.gissetting3d()
   },
   mounted () {
-    this.smviewer = new Cesium.Viewer('cesiumContainer');
+    this.smviewer = new Cesium.Viewer('cesiumContainer', {
+      // infoBox: false
+    });
 
     //使用本地的一张图片初始化地球（2：1）
     this.smviewer.imageryLayers.addImageryProvider(new Cesium.SingleTileImageryProvider({
@@ -119,7 +122,7 @@ export default {
         currentRoute.isStopVisible = $(this).prop('checked');
       });
 
-      $('#toolbar').show();
+      $('#toolbar').hide();
       $('#loadingbar').remove();
     });
   },
@@ -132,6 +135,7 @@ export default {
         this.fId = result.F_Id
         this.$store.dispatch("setfId", this.fId);
         this.scenicLists()
+        // this.getmonitorLists()
         // this.getListCs()
         // this.getListZx()
         // this.getListWIFI()
@@ -144,9 +148,9 @@ export default {
         this.$store.dispatch("setScenicList", this.scenicList);
         for (var i = 0; i < this.scenicList.length; i++) {
           var scenicListAdd = this.smviewer.entities.add({
-            name: this.scenicList[i].F_Remarks,
+            name: this.scenicList[i].F_Name,
             position: Cesium.Cartesian3.fromDegrees(this.scenicList[i].F_XPoint * 1, this.scenicList[i].F_YPoint * 1, this.scenicList[i].F_Height * 1),
-
+            description: '<div style="text-align: justify;"><img src=' + this.scenicList[i].F_Image + ' style="margin-bottom:5px;width:300px;height:150px"> ' + this.scenicList[i].F_Remarks + '</div>',
             billboard: {
               image: require('../assets/images/scenic_icon.png'),
               width: 30,
@@ -167,19 +171,22 @@ export default {
       });
     },
     getmonitorLists () {
-      this.monitorLists = this.$store.state.scenicList;
-      for (var i = 0; i < this.monitorLists.length; i++) {
+      this.videoList = this.$store.state.videoList;
+      console.log(this.videoList)
+      this.smviewer.entities.removeAll();
+      for (var i = 0; i < this.videoList.length; i++) {
+        console.log(this.videoList[i].F_Name)
         var monitorListAdd = this.smviewer.entities.add({
-          name: this.monitorLists[i].F_Remarks,
-          position: Cesium.Cartesian3.fromDegrees(this.monitorLists[i].F_XPoint * 1, this.monitorLists[i].F_YPoint * 1, this.monitorLists[i].F_Height * 1),
-
+          name: this.videoList[i].F_Name,
+          position: Cesium.Cartesian3.fromDegrees(this.videoList[i].F_XPoint * 1, this.videoList[i].F_YPoint * 1, this.videoList[i].F_Height * 1),
+          description: '<div style="text-align: justify;"><video width=300 height=200 controls style="margin-bottom:5px"><source src= ' + this.videoList[i].F_Video + ' ></video/>' + this.videoList[i].F_Remarks + '</div>',
           billboard: {
             image: require('../assets/images/jk_icon.png'),
             width: 30,
             height: 40,
           },
           label: {
-            text: this.monitorLists[i].F_Name,
+            text: this.videoList[i].F_Name,
             font: '18pt monospace',
             style: Cesium.LabelStyle.FILL_AND_OUTLINE,
             outlineWidth: 2,
@@ -194,19 +201,17 @@ export default {
     async getListCs () {
       this.F_Id = this.$store.state.F_Id
       var F_Id = this.F_Id[0]
-      console.log(F_Id)
       await this.$http.get("/scenicareaaround/getlist/" + F_Id).then(res => {
         console.log(res);
         this.csList = res.data.data;
         this.csListFilter = this.csList.filter(function (e) {
           return e.F_GisSteeingId;
         })
-        // this.$store.dispatch("setScenicList", this.csListFilter);
         for (var i = 0; i < this.csListFilter.length; i++) {
           var csListAdd = this.smviewer.entities.add({
             name: this.csListFilter[i].F_Remarks,
             position: Cesium.Cartesian3.fromDegrees(this.csListFilter[i].F_XPoint * 1, this.csListFilter[i].F_YPoint * 1, this.csListFilter[i].F_Height * 1),
-
+            description: '<div style="text-align: justify;"><img src=' + this.csListFilter[i].F_Image + ' style="margin-bottom:5px;width:300px;height:150px"> ' + this.csListFilter[i].F_Remarks + '</div>',
             billboard: {
               image: require('../assets/images/cs.png'),
               width: 30,
@@ -240,7 +245,7 @@ export default {
           var zxListAdd = this.smviewer.entities.add({
             name: this.zxListFilter[i].F_Remarks,
             position: Cesium.Cartesian3.fromDegrees(this.zxListFilter[i].F_XPoint * 1, this.zxListFilter[i].F_YPoint * 1, this.zxListFilter[i].F_Height * 1),
-
+            description: '<div style="text-align: justify;"><img src=' + this.zxListFilter[i].F_Image + ' style="margin-bottom:5px;width:300px;height:150px"> ' + this.zxListFilter[i].F_Remarks + '</div>',
             billboard: {
               image: require('../assets/images/zx.png'),
               width: 30,
@@ -274,7 +279,7 @@ export default {
           var wifiListAdd = this.smviewer.entities.add({
             name: this.wifiListFilter[i].F_Remarks,
             position: Cesium.Cartesian3.fromDegrees(this.wifiListFilter[i].F_XPoint * 1, this.wifiListFilter[i].F_YPoint * 1, this.wifiListFilter[i].F_Height * 1),
-
+            description: '<div style="text-align: justify;"><img src=' + this.wifiListFilter[i].F_Image + ' style="margin-bottom:5px;width:300px;height:150px"> ' + this.wifiListFilter[i].F_Remarks + '</div>',
             billboard: {
               image: require('../assets/images/wifi.png'),
               width: 30,
@@ -307,6 +312,7 @@ export default {
           var fdListAdd = this.smviewer.entities.add({
             name: this.fdListFilter[i].F_Remarks,
             position: Cesium.Cartesian3.fromDegrees(this.fdListFilter[i].F_XPoint * 1, this.fdListFilter[i].F_YPoint * 1, this.fdListFilter[i].F_Height * 1),
+            description: '<div style="text-align: justify;"><img src=' + this.fdListFilter[i].F_Image + ' style="margin-bottom:5px;width:300px;height:150px"> ' + this.fdListFilter[i].F_Remarks + '</div>',
             billboard: {
               image: require('../assets/images/fd.png'),
               width: 30,
@@ -330,5 +336,5 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 </style>

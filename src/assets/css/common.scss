@@ -7,6 +7,8 @@
 .cesium-infoBox {
   top: initial;
   bottom: 200px;
+  width: 320px;
+  right: 10px;
 
   .cesium-infoBox-title {
     height: auto;
@@ -17,7 +19,10 @@
 
 }
 
-
+.cesium-viewer-bottom,
+.cesium-svgPath-svg {
+  display: none;
+}
 
 .el-popover p {
   text-align: right;

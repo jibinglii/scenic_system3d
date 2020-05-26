@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="hover"
+      <el-popover trigger="click"
                   placement="right"
                   width="460"
                   v-model="visible"
@@ -44,22 +44,23 @@ export default {
       isshow: false,
       img: require("../assets/images/jk.png"),
       activeImg: require("../assets/images/active_jk.png"),
-      scenicList: []
+      scenicList: [],
+      videoList: []
     };
   },
   created () {
   },
   methods: {
     viewMapClick (item) {
-      var camera = this.$store.state.camera
-      camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(item.F_XPoint * 1, item.F_YPoint * 1, item.F_Height * 1),
-        orientation: {
-          heading: 3.361386,
-          pitch: -0.543285,
-          roll: 6.283185307179563
-        }
-      });
+      this.videoLists(item.F_Id)
+    },
+    async videoLists (F_Id) {
+      await this.$http.get('gisscenicarea/getvideolist/' + F_Id).then(res => {
+        this.videoList = res.data.data
+        console.log(this.videoList)
+        this.$store.dispatch('setvideoList', this.videoList)
+        this.$emit('parentgetmonitorLists')
+      })
     }
   },
   components: {

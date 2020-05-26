@@ -4,6 +4,7 @@ export default {
   camera: {},
   F_Id: [],
   smviewer: {},
+  videoList: [],
   scenicListAdd: [],
   monitorListAdd: [],
   csListAdd: [],

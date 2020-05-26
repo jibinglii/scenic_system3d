@@ -3,6 +3,7 @@ export const scenicList = state => state.scenicList
 export const camera = state => state.camera
 export const F_Id = state => state.F_Id
 export const smviewer = state => state.smviewer
+export const videoList = state => state.videoList
 export const scenicListAdd = state => state.scenicListAdd
 export const monitorListAdd = state => state.monitorListAdd
 export const csListAdd = state => state.csListAdd

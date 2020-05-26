@@ -24,6 +24,11 @@ export const setsmviewer = ({
 }, data) => {
   commit('changesmviewer', data)
 }
+export const setvideoList = ({
+  commit
+}, data) => {
+  commit('changevideoList', data)
+}
 export const setscenicListAdd = ({
   commit
 }, data) => {

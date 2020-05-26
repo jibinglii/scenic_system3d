@@ -14,6 +14,9 @@ export const changeF_Id = (state, data) => {
 export const changesmviewer = (state, data) => {
   state.smviewer = data
 }
+export const changevideoList = (state, data) => {
+  state.videoList = data
+}
 export const changescenicListAdd = (state, data) => {
   state.scenicListAdd = data
 }

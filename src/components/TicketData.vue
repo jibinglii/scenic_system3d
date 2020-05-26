@@ -57,7 +57,6 @@ export default {
       this.$http
         .get("http://119.3.248.197:8086/api/mobile/JingQuPiaoWu")
         .then(res => {
-          console.log(res);
           // 绘制图表
           mainTicket1.setOption({
             color: ["#1d64bd", "#e6a23c"],
@@ -148,7 +147,6 @@ export default {
       this.$http
         .get("http://119.3.248.197:8086/api/mobile/JingQuKeLiuLiang")
         .then(res => {
-          console.log(res);
           // 绘制图表
           mainTicket2.setOption({
             color: ["#1d64bd", "#e6a23c"],

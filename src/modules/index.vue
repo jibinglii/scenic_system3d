@@ -60,17 +60,18 @@
       </div>
     </div>
     <div class="list_div">
-      <v-search @mouseenter.native="mouseSearch"></v-search>
-      <v-weather @mouseenter.native="mouseWeather"></v-weather>
-      <v-sights @mouseenter.native="mouseSight"></v-sights>
-      <v-address @mouseenter.native="mouseAddress"
+      <v-search @click.native="mouseSearch"></v-search>
+      <v-weather @click.native="mouseWeather"></v-weather>
+      <v-sights @click.native="mouseSight"></v-sights>
+      <v-address @click.native="mouseAddress"
                  @parentgetListCs="childgetListCs"
                  @parentgetListZx="childgetListZx"
                  @parentgetListWIFI="childgetListWIFI"
                  @parentgetListFd="childgetListFd"></v-address>
-      <v-monitor @mouseenter.native="mouseMonitor"></v-monitor>
-      <v-navigation @mouseenter.native="mouseNavigation"></v-navigation>
-      <v-statistics @mouseenter.native="mousestatic"></v-statistics>
+      <v-monitor @click.native="mouseMonitor"
+                 @parentgetmonitorLists="childgetmonitorLists"></v-monitor>
+      <v-navigation @click.native="mouseNavigation"></v-navigation>
+      <v-statistics @click.native="mousestatic"></v-statistics>
     </div>
     <div class="echarts_right">
       <v-pack-data v-show="$store.state.isPack"></v-pack-data>
@@ -140,6 +141,9 @@ export default {
     childgetListFd () {
       this.$refs.mychild.getListFd();
     },
+    childgetmonitorLists () {
+      this.$refs.mychild.getmonitorLists();
+    },
     mouseSight () {
       if (this.$store.state.scenicList != '') {
         var csListAdd = this.$store.state.csListAdd
@@ -162,26 +166,26 @@ export default {
       this.$refs.mychild.getListZx();
       this.$refs.mychild.getListWIFI();
       this.$refs.mychild.getListFd();
-      $('#toolbar').css('opacity', 0)
+      $('#toolbar').hide()
     },
     mouseMonitor () {
-      if (this.$store.state.scenicList != '') {
-        var csListAdd = this.$store.state.csListAdd
-        var zxListAdd = this.$store.state.zxListAdd
-        var wifiListAdd = this.$store.state.wifiListAdd
-        var fdListAdd = this.$store.state.fdListAdd
-        this.smviewer = this.$store.state.smviewer
-        this.smviewer.entities.removeAll(csListAdd);
-        this.smviewer.entities.removeAll(zxListAdd);
-        this.smviewer.entities.removeAll(wifiListAdd);
-        this.smviewer.entities.removeAll(fdListAdd);
-      }
-      this.$refs.mychild.getmonitorLists();
-      $('#toolbar').css('opacity', 0)
+      // if (this.$store.state.scenicList != '') {
+      var csListAdd = this.$store.state.csListAdd
+      var zxListAdd = this.$store.state.zxListAdd
+      var wifiListAdd = this.$store.state.wifiListAdd
+      var fdListAdd = this.$store.state.fdListAdd
+      this.smviewer = this.$store.state.smviewer
+      this.smviewer.entities.removeAll(csListAdd);
+      this.smviewer.entities.removeAll(zxListAdd);
+      this.smviewer.entities.removeAll(wifiListAdd);
+      this.smviewer.entities.removeAll(fdListAdd);
+      // }
+      // this.$refs.mychild.getmonitorLists();
+      $('#toolbar').hide()
     },
     mouseNavigation () {
       if (this.$store.state.scenicList != '') {
-        $('#toolbar').css('opacity', 1)
+        $('#toolbar').show()
       }
     },
     mouseSearch () {
@@ -189,13 +193,14 @@ export default {
       this.$refs.mychild.getListZx();
       this.$refs.mychild.getListWIFI();
       this.$refs.mychild.getListFd();
-      $('#toolbar').css('opacity', 0)
+      this.$refs.mychild.scenicLists();
+      $('#toolbar').hide()
     },
     mouseWeather () {
-      $('#toolbar').css('opacity', 0)
+      $('#toolbar').hide()
     },
     mousestatic () {
-      $('#toolbar').css('opacity', 0)
+      $('#toolbar').hide()
     },
     async ticketDatas () {
       await this.$http
@@ -237,7 +242,6 @@ export default {
     position: fixed;
     top: 40px;
     left: 20px;
-    opacity: 0;
     #play {
       content: url(../assets/images/play.png);
       height: 40px;

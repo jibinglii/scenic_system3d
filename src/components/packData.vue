@@ -74,7 +74,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res)
           // 绘制图表
           myChart.setOption({
             color: ["#1d64bd", "#e6a23c"],
