@@ -69,7 +69,7 @@ export default {
     this.$store.dispatch('setcamera', camera)
     var routes = new Cesium.RouteCollection(this.smviewer.entities);
     //添加fpf飞行文件，fpf由SuperMap iDesktop生成
-    var fpfUrl = '../static/NewSceneRoutes.fpf';
+    var fpfUrl = '../../static/NewSceneRoutes.fpf';
     routes.fromFile(fpfUrl);
     //初始化飞行管理
     var flyManager = new Cesium.FlyManager({
@@ -172,7 +172,7 @@ export default {
     },
     getmonitorLists () {
       this.videoList = this.$store.state.videoList;
-      console.log(this.videoList)
+      // console.log(this.videoList)
       this.smviewer.entities.removeAll();
       for (var i = 0; i < this.videoList.length; i++) {
         console.log(this.videoList[i].F_Name)

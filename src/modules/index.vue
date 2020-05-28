@@ -243,19 +243,19 @@ export default {
     top: 40px;
     left: 20px;
     #play {
-      content: url(../assets/images/play.png);
+      content: url("../../static/img/play.png");
       height: 40px;
       padding: 5px;
     }
 
     #pause {
-      content: url(../assets/images/pause.png);
+      content: url("../../static/img/pause.png");
       height: 40px;
       padding: 5px;
     }
 
     #stop {
-      content: url(../assets/images/stop.png);
+      content: url("../../static/img/stop.png");
       height: 40px;
       padding: 5px;
     }
@@ -311,7 +311,8 @@ export default {
     top: 50%;
   }
   .list_div {
-    background: url(../assets/images/bg_line.png) no-repeat;
+    background: url("../assets/images/bg_line.png");
+    background-repeat: no-repeat;
     width: 60%;
     height: 247px;
     background-size: 100%;

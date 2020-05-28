@@ -57,7 +57,6 @@ export default {
     async videoLists (F_Id) {
       await this.$http.get('gisscenicarea/getvideolist/' + F_Id).then(res => {
         this.videoList = res.data.data
-        console.log(this.videoList)
         this.$store.dispatch('setvideoList', this.videoList)
         this.$emit('parentgetmonitorLists')
       })
